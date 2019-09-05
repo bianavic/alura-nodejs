@@ -36,6 +36,16 @@ module.exports = (app) => {
 
     app.post('/livros', function(req, resp) {
         console.log(req.body);
+          const livroDao = new LivroDao(db);
+    livroDao.lista()
+            .then(livros => resp.marko(
+                require('../app/views/livros/listagem/lista.marko'),
+                {
+                    livros: livros
+                }
+
+            ))
+            .catch(erro => console.log(erro));
     });
 
 };
