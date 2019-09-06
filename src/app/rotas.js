@@ -1,8 +1,8 @@
-const LivroDao = require('../app/infra/livro-dao');
+const LivroDao = require('../app/infra/livro-dao').default;
 const db = require('../config/database');
 
 module.exports = (app) => {
-    app.get('/', function(req, resp) {
+    app.get('/', function (req, resp) {
         resp.send(
             `
                 <html>
@@ -16,31 +16,29 @@ module.exports = (app) => {
             `
         );
     });
-    
-    app.get('/livros', function(req, resp) {
+
+    app.get('/livros', function (req, resp) {
 
         const livroDao = new LivroDao(db);
         livroDao.lista()
-                .then(livros => resp.marko(
-                    require('../app/views/livros/listagem/lista.marko'),
-                    {
-                        livros: livros
-                    }
-                ))
-                .catch(erro => console.log(erro));
+            .then(livros => resp.marko(
+                require('../app/views/livros/listagem/lista.marko'), {
+                    livros: livros
+                }
+            ))
+            .catch(erro => console.log(erro));
     });
 
-    app.get('/livros/form', function(req, resp) {
+    app.get('/livros/form', function (req, resp) {
         resp.marko(require('../app/views/livros/form/form.marko'))
     })
 
-    app.post('/livros', function(req, resp) {
+    app.post('/livros', function (req, resp) {
         console.log(req.body);
-          const livroDao = new LivroDao(db);
-    livroDao.lista()
+        const livroDao = new LivroDao(db);
+        livroDao.lista()
             .then(livros => resp.marko(
-                require('../app/views/livros/listagem/lista.marko'),
-                {
+                require('../app/views/livros/listagem/lista.marko'), {
                     livros: livros
                 }
 
@@ -48,13 +46,22 @@ module.exports = (app) => {
             .catch(erro => console.log(erro));
     });
 
-    app.post('/livros', function(req, resp) {
+    app.post('/livros', function (req, resp) {
         console.log(req.body);
         const livroDao = new LivroDao(db);
         livroDao.adiciona(req.body)
-                .then(resp.redirect('/livros'))
-                .catch(erro => console.log(erro));
+            .then(resp.redirect('/livros'))
+            .catch(erro => console.log(erro));
+    });
+
+    app.delete('/livros/:id', function (req, resp) {
+        const id = req.params.id;
+
+        const livroDao = new LivroDao(db);
+        livroDao.remove(id)
+            .then(() => resp.status(200).end())
+            .catch(erro => console.log(erro));
+
     });
 
 };
-        
