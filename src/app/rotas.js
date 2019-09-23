@@ -1,4 +1,4 @@
-const LivroDao = require('../app/infra/livro-dao').default;
+const LivroDao = require('../app/infra/livro-dao');
 const db = require('../config/database');
 
 module.exports = (app) => {

@@ -4,6 +4,7 @@ class LivroDao {
         this._db = db;
     }
 
+   // realizando a 
     adiciona(livro) {
         return new Promise((resolve, reject) => {
             this._db.run(`
@@ -42,7 +43,7 @@ class LivroDao {
             )
         });
     }
-
+ 
     buscaPorId(id) {
 
         return new Promise((resolve, reject) => {
@@ -107,6 +108,6 @@ class LivroDao {
             );
         });
     }
-}
+} 
 
 module.exports = LivroDao;

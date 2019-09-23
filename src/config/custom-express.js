@@ -5,6 +5,7 @@ const express = require('express');
 const app = express()
 const bodyParser = require('body-parser')
 
+// definicao do middleware
 app.use(bodyParser.urlencoded({
     extended: true
 }));
