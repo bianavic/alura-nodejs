@@ -4,19 +4,6 @@ class LivroDao {
         this._db = db;
     }
 
-    lista() {
-        return new Promise((resolve, reject) => {
-            this._db.all(
-                'SELECT * FROM livros',
-                (erro, resultados) => {
-                    if (erro) return reject('Não foi possível listar os livros!');
-
-                    return resolve(resultados);
-                }
-            )
-        });
-    }
-
     adiciona(livro) {
         return new Promise((resolve, reject) => {
             this._db.run(`
@@ -57,6 +44,7 @@ class LivroDao {
     }
 
     buscaPorId(id) {
+
         return new Promise((resolve, reject) => {
             this._db.get(
                 `
@@ -103,7 +91,7 @@ class LivroDao {
     remove(id) {
 
         return new Promise((resolve, reject) => {
-            this._db.run(
+            this._db.get(
                 `
                     DELETE 
                     FROM livros
